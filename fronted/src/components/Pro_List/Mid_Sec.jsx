@@ -1,68 +1,35 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
 import Items from './Items'
 import Grid from './grid'
+import axios from 'axios';
 
-const items = [
-    {
-        id: 1,
-        image: "src/images/mob.png",
-        title: "Canon Cmera EOS 2000, Black 10x zoom",
-        price: "$998.00",
-        oldPrice: "$1128.00",
-        rating: "⭐⭐⭐⭐⭐",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
-    },
-    {
-        id: 1,
-        image: "src/images/mob.png",
-        title: "Canon Cmera EOS 2000, Black 10x zoom",
-        price: "$998.00",
-        oldPrice: "$1128.00",
-        rating: "⭐⭐⭐⭐⭐",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
-    },
-    {
-        id: 1,
-        image: "src/images/mob.png",
-        title: "Canon Cmera EOS 2000, Black 10x zoom",
-        price: "$998.00",
-        oldPrice: "$1128.00",
-        rating: "⭐⭐⭐⭐⭐",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
-    },
-    {
-        id: 1,
-        image: "src/images/mob.png",
-        title: "Canon Cmera EOS 2000, Black 10x zoom",
-        price: "$998.00",
-        oldPrice: "$1128.00",
-        rating: "⭐⭐⭐⭐⭐",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
-    },
-    {
-        id: 1,
-        image: "src/images/mob.png",
-        title: "Canon Cmera EOS 2000, Black 10x zoom",
-        price: "$998.00",
-        oldPrice: "$1128.00",
-        rating: "⭐⭐⭐⭐⭐",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
-    },
-    {
-        id: 1,
-        image: "src/images/mob.png",
-        title: "Canon Cmera EOS 2000, Black 10x zoom",
-        price: "$998.00",
-        oldPrice: "$1128.00",
-        rating: "⭐⭐⭐⭐⭐",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
-    },
-    // Add more items as needed
-];
 
 
 const Mid_Sec = () => {
     const [isGrid, setisGrid] = useState(false);
+
+    const [products, setProducts] = useState([]);
+
+   
+
+  useEffect(() => {
+    const fetchPublicProducts = async () => {
+      try {
+        const res = await axios.get('http://localhost:4000/admin/products',{withCredentials:true});
+        
+        setProducts(res.data);
+        
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchPublicProducts();
+  }, []);
+
+
+
+
     return (
         <div className="w-full">
             <div className='mt-4 mx-auto w-full max-w-2xl flex flex-col sm:flex-row justify-between items-center rounded-md border-1 border-gray-300 px-3 py-2 gap-2'>
@@ -99,7 +66,7 @@ const Mid_Sec = () => {
                 </div>
             </div>
             <div className="w-full">
-                {isGrid ? <Grid items={items} /> : <Items items={items} />}
+                {isGrid ? <Grid items={products} /> : <Items items={products} />}
             </div>
         </div>
     )

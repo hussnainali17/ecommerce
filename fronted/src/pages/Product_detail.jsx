@@ -4,14 +4,11 @@ import NavBar from '../components/NavBar'
 import Footer from '../components/footer'
 import Lower from '../components/Lower'
 import Nav_sec from '../components/Pro_List/nav_sec'
-import Detail from '../components/Pro_Detail/Detail'
+//import Detail from '../components/Pro_Detail/Detail'
 import Description from '../components/Pro_Detail/Description'
 import Banner from '../components/Pro_Detail/Banner'
 import Related from '../components/Related'
-
-
-
-
+import Detail from '../components/Pro_Detail/Detail'
 
 
 const Product_detail = () => {

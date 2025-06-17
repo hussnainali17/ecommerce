@@ -1,13 +1,20 @@
-import React from 'react'
-import { useState } from 'react';
+//import React from 'react'
+import React, { useState, useContext, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
-const signup = () => {
+import { UserDataContext } from '../Context/UserContext';
+
+const Signup = () => {
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
   const [name, setname] = useState('')
   const navigate = useNavigate();
+const { UCON, setUCON } = useContext(UserDataContext);
+
+useEffect(() => {
+  console.log('UCON updated:', UCON); // Log UCON after it's updated
+}, [UCON]); // This effect runs whenever UCON changes
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -16,8 +23,7 @@ const signup = () => {
          email : email,
          password : password
         }
-
-        console.log(user);
+        
     // const response = await axios.post('http://localhost:4000/users/signup', user)
 
     // if (response.status === 201) {
@@ -32,6 +38,9 @@ const signup = () => {
   if (response.status === 201) {
     const data = response.data
     localStorage.setItem('token', data.token)
+   setUCON({ email: data.newUser.email, name: data.newUser.name, userId: data.newUser._id });
+   localStorage.setItem('UCON', JSON.stringify({ email: data.newUser.email, name: data.newUser.name, userId: data.newUser._id }));
+    //console.log(UCON); // Remove this line
     navigate('/')
   }
 } catch (error) {
@@ -59,4 +68,4 @@ const signup = () => {
   )
 }
 
-export default signup
+export default Signup

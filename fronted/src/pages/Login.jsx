@@ -1,12 +1,17 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { UserDataContext } from '../Context/UserContext';
 
 const Login = () => {
 const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
   const navigate = useNavigate();
+const { UCON, setUCON } = useContext(UserDataContext);
+
+useEffect(() => {
+  console.log('UCON updated:', UCON); // Log UCON after it's updated
+}, [UCON]); // This effect runs whenever UCON changes
 
 const submitHandler = async (e) => {
         e.preventDefault();
@@ -18,13 +23,19 @@ const submitHandler = async (e) => {
         console.log(user);
     
     try {
-const response = await axios.post('http://localhost:4000/users/login', user)
-
+const response = await axios.post('http://localhost:4000/users/login', user,  {
+  withCredentials: true // ✅ This tells browser to store cookie
+})
   if (response.status === 200) {
-    const data = response.data
-    console.log("Login successful:", data);
+    const data = response.data;
+    setUCON({ email: data.user.email, name: data.user.name, userId: data.user._id });
+    localStorage.setItem('UCON', JSON.stringify({ email: data.user.email, name: data.user.name, userId: data.user._id }));
     localStorage.setItem('token', data.token)
-    navigate('/')
+    if (data.user.role === 'admin') {
+      navigate('/dashboard')
+    } else {
+      navigate('/')
+    }
   }
 } catch (error) {
   console.error("Login error:", error.response?.data || error.message)

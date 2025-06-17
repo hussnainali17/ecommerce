@@ -1,7 +1,9 @@
 import React from 'react'
 import Pro_Like from './Pro_Like'
-
+import { useContext } from 'react'
+import { ProductDataContext } from '../../Context/ProductContext'
 const Description = () => {
+  const { product } = useContext(ProductDataContext);
   return (
     <div className='flex flex-col lg:flex-row mx-auto px-4 lg:px-12 py-6 lg:py-12 justify-center items-start gap-6 lg:gap-8 max-w-7xl'>
       {/* Description Box */}
@@ -19,10 +21,7 @@ const Description = () => {
         {/* Description Text */}
         <div className='text-gray-600 text-sm leading-relaxed'>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et <br className='hidden sm:block' />
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <br />
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, <br />
-            Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            {product.description}
           </p>
         </div>
 
