@@ -1,28 +1,60 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const items = [
-  { id: 1, name: 'Item 1', price: '$10', img: 'src/images/shirt.png', text: 'T-shirt with multiple colors for men' },
-  { id: 2, name: 'Item 2', price: '$20', img: 'src/images/shirt.png', text: 'T-shirt with multiple colors for men' },
-  { id: 3, name: 'Item 3', price: '$30', img: 'src/images/shirt.png', text: 'T-shirt with multiple colors for  how can we improve this' },
-  { id: 4, name: 'Item 4', price: '$40', img: 'src/images/shirt.png', text: 'T-shirt with multiple colors for' },
-  { id: 5, name: 'Item 5', price: '$40', img: 'src/images/shirt.png', text: 'T-shirt' },
-  { id: 6, name: 'Item 6', price: '$10', img: 'src/images/shirt.png', text: 'T-shirt with multiple colors for men' },
-  { id: 7, name: 'Item 7', price: '$20', img: 'src/images/shirt.png', text: 'T-shirt with multiple colors for men' },
-  { id: 8, name: 'Item 8', price: '$30', img: 'src/images/shirt.png', text: 'T-shirt with multiple colors for  how can we improve this' },
-  { id: 9, name: 'Item 9', price: '$40', img: 'src/images/shirt.png', text: 'T-shirt with multiple colors for' },
-  { id: 10, name: 'Item 10', price: '$40', img: 'src/images/shirt.png', text: 'T-shirt with multiple colos for men' }
-];
-
+import { ProductDataContext } from '../Context/ProductContext';
+ 
 const Recommended = () => {
+
+
+  const { Product, setProduct } = useContext(ProductDataContext);
+      const navigate = useNavigate();
+      const handleViewDetails = async (item) => {
+          try {
+             
+              const res = await axios.get(`http://localhost:4000/admin/product/${item._id}`, { withCredentials: true });
+              localStorage.setItem('productDetails', JSON.stringify(res.data)); 
+              setProduct({
+                  id: res.data._id,
+                  title: res.data.title,
+                  price: res.data.price,
+                  stock: res.data.stock,
+                  description: res.data.description,
+                  images: res.data.images,
+                  category: res.data.category,
+              });
+              navigate('/product_detail'); // Navigate to the product details page
+          } catch (error) {
+              console.error('Error fetching product details:', error);
+              // Handle error (e.g., display an error message)
+          }
+      };
+  const [items, setitems] = useState([]);
+
+  useEffect(() => {
+    const fetchPublicProducts = async () => {
+      try {
+        const res = await axios.get('http://localhost:4000/admin/products',{withCredentials:true});
+        setitems(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchPublicProducts();
+  }, []);
+
+
   return (
     <div className='w-full max-w-[1100px] mx-auto mt-2 rounded-lg p-3'>
       <p className='font-semibold text-xl'>Recommended Items</p>
       <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-3'>
-        {items.map(item => (
-          <div key={item.id + item.name} className='border border-gray-300 bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow'>
-            <img src={item.img} alt={item.name} className='w-full h-32 object-cover mb-2 rounded-md' />
-            <h3 className='text-lg font-semibold'>{item.price}</h3>
-            <p className='text-gray-600'>{item.text}</p>
+        {items.slice(0, 10).map(item => (
+          <div onClick={()=>{handleViewDetails(item)}} key={item._id} className='border border-gray-300 bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow'>
+            <img src={item.images[0].url} alt={item.title} className='w-full h-32 object-cover mb-2 rounded-md' />
+            <h3 className='text-lg font-semibold'>{item.price}$</h3>
+            <p className='text-gray-600'>{item.description}</p>
           </div>
         ))}
       </div>

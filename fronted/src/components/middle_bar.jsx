@@ -1,7 +1,10 @@
 import React from 'react'
 import './middle.css'
-
+import { useNavigate } from 'react-router-dom'
 const MiddleBar = () => {
+  const UCON=JSON.parse(localStorage.getItem('UCON'))
+  const navigate=useNavigate();
+
   return (
     <div className='mx-auto my-4 bg-gray-100 flex flex-col md:flex-row justify-between items-center md:w-[1100px] w-full md:h-[400px]'>
       
@@ -38,12 +41,12 @@ const MiddleBar = () => {
           <div className='flex justify-center items-center p-2'>
             <img src="src/images/Avatar.png" alt="Avatar" />
             <div>
-              <p className='text-[10px]'>Hi User</p>
+              <p className='text-[10px]'>Hi {UCON.name}</p>
               <p className='text-[10px]'>Let's Get Started</p>
             </div>
           </div>
-          <button className='bg-blue-700 text-white rounded-md w-[170px] h-[30px] text-[10px] mb-2'>Join Now</button>
-          <button className='bg-white text-blue-600 rounded-md w-[170px] h-[30px] text-[10px]'>Log In</button>
+          <button className='bg-blue-700 text-white rounded-md w-[170px] h-[30px] text-[10px] mb-2' onClick={()=>{navigate('/signup')}}>Join Now</button>
+          <button className='bg-white text-blue-600 rounded-md w-[170px] h-[30px] text-[10px]' onClick={()=>{navigate('/login')}}>Log In</button>
         </div>
 
         <div className='w-[200px] h-[95px] bg-orange-400 flex flex-col text-[14px] p-5 rounded-md'>

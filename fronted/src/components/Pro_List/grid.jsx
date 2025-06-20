@@ -9,7 +9,6 @@ const Grid = ({ items }) => {
 
     const handleViewDetails = async (item) => {
         try {
-            console.log('Fetching details for item:', item);
             const res = await axios.get(`http://localhost:4000/admin/product/${item._id}`, { withCredentials: true });
             localStorage.setItem('productDetails', JSON.stringify(res.data)); 
             setProduct({

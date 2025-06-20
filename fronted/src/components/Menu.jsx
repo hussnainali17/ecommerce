@@ -1,13 +1,18 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const MobileMenu = ({ isOpen, onClose }) => {
+  const navigate=useNavigate();
+  const sign=()=>{
+    navigate('/signup')
+  }
   return (
     <div className={`fixed inset-0 z-50 transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'} bg-white w-4/5 max-w-sm shadow-lg`}>
       {/* Close Button */}
       <div className="flex items-center justify-between p-4 border-b">
         <div className="flex items-center gap-2">
           <div className="w-10 h-10 bg-gray-200 rounded-full" />
-          <p className="text-sm text-gray-600">Sign in | Register</p>
+          <p onClick={()=>{sign()}} className="text-sm text-gray-600">Sign in | Register</p>
         </div>
         <button onClick={onClose}>
           <i className="fa-solid fa-xmark text-xl text-gray-500"></i>

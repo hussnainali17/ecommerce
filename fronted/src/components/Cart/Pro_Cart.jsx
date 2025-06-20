@@ -20,7 +20,7 @@ const Pro_Cart = () => {
       try {
         const response = await axios.post('http://localhost:4000/cart/get', {
           userId: UCON.userId
-        });
+        },{withCredentials:true});
 
         const cartItems = response.data.items.map((item) => ({
           id: item.productId._id,
@@ -44,7 +44,7 @@ const Pro_Cart = () => {
       await axios.post('http://localhost:4000/cart/add', {
         userId: UCON.userId,
         items: [{ productId, quantity: 1 }]
-      });
+      },{withCredentials:true});
 
       setItems((prevItems) =>
         prevItems.map((item) =>
@@ -64,7 +64,7 @@ const Pro_Cart = () => {
           productId,
           userId: UCON.userId
         }
-      });
+      },{withCredentials:true});
 
       // If quantity was 1, remove item entirely
       if (quantity === 1) {

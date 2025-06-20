@@ -33,6 +33,9 @@ const Detail = () => {
 
   const handleAddToCart = async () => {
     try {
+      if (!UCON || !UCON.userId) {
+        navigate('/login');
+      }
       //console.log(UCON.userId,product._id);
       const response = await axios.post(
         'http://localhost:4000/cart/add',
@@ -43,7 +46,6 @@ const Detail = () => {
         { withCredentials: true }
       );
       navigate('/cart'); // Navigate to cart after adding product
-      console.log('Product added to cart successfully:', response.data);
       
     } catch (error) {
       console.error('Error adding product to cart:', error);

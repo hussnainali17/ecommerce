@@ -51,8 +51,9 @@ const Description = () => {
       </div>
 
       {/* Recommended Products */}
-      <div className='w-full lg:w-[35%]'>
-        <Pro_Like />
+      <div className='w-full flex justify-end md:right-3 lg:w-[35%]'>
+         <Pro_Like />
+       
       </div>
     </div>
   )

@@ -8,7 +8,7 @@ const Items = ({items}) => {
     const navigate = useNavigate();
     const handleViewDetails = async (item) => {
         try {
-            console.log('Fetching details for item:', item);
+           
             const res = await axios.get(`http://localhost:4000/admin/product/${item._id}`, { withCredentials: true });
             localStorage.setItem('productDetails', JSON.stringify(res.data)); 
             setProduct({
@@ -32,10 +32,10 @@ const Items = ({items}) => {
             {items.map((item, idx) => (
                 <div
                     key={idx}
-                    className='flex flex-row items-center border rounded-2xl border-gray-300 m-2 p-3 sm:m-5 sm:p-6 bg-white'
+                    className='flex flex-row items-center  border rounded-2xl border-gray-300 m-2 p-3 sm:m-5 sm:p-6 md:space-x-4 space-x-2 bg-white'
                 >
-                    <div className='w-[80px] h-[80px] flex-shrink-0 flex items-center justify-center'>
-                        <img src={item.images[0].url} alt={item.title} className="w-[70px] h-[70px] object-contain" />
+                    <div className='w-[100px] h-[100px] flex-shrink-0 flex items-center justify-center'>
+                        <img src={item.images[0].url} alt={item.title} className="w-full h-full object-contain" />
                     </div>
                     <div className='flex flex-col gap-1 p-2 text-sm flex-1'>
                         <p className='font-semibold text-[15px] sm:text-base'>{item.title}</p>

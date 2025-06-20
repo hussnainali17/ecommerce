@@ -1,7 +1,27 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 const NavBar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  //   const [countries, setCountries] = useState([]);
+  // const [selectedCountry, setSelectedCountry] = useState("");
+
+  // useEffect(() => {
+  //   const fetchCountries = async () => {
+  //     try {
+  //       const res = await axios.get("https://restcountries.com/v3.1/all");
+  //       const sortedCountries = res.data
+  //         .map((country) => country.name.common)
+  //         .sort(); // sort alphabetically
+  //       setCountries(sortedCountries);
+  //     } catch (error) {
+  //       console.error("Failed to fetch countries", error);
+  //     }
+  //   };
+
+  //   fetchCountries();
+  // }, []);
 
   const toggleSidebar = () => {
     if (window.innerWidth < 768) {

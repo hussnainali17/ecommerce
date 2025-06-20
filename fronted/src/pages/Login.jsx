@@ -10,7 +10,7 @@ const [ email, setEmail ] = useState('')
 const { UCON, setUCON } = useContext(UserDataContext);
 
 useEffect(() => {
-  console.log('UCON updated:', UCON); // Log UCON after it's updated
+  // console.log('UCON updated:', UCON); // Log UCON after it's updated
 }, [UCON]); // This effect runs whenever UCON changes
 
 const submitHandler = async (e) => {
@@ -31,8 +31,11 @@ const response = await axios.post('http://localhost:4000/users/login', user,  {
     setUCON({ email: data.user.email, name: data.user.name, userId: data.user._id });
     localStorage.setItem('UCON', JSON.stringify({ email: data.user.email, name: data.user.name, userId: data.user._id }));
     localStorage.setItem('token', data.token)
+    localStorage.setItem("role" , data.user.role)
     if (data.user.role === 'admin') {
+      localStorage.setItem("role" ,'admin')
       navigate('/dashboard')
+      
     } else {
       navigate('/')
     }

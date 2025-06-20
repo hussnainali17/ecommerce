@@ -5,27 +5,26 @@ import axios from 'axios';
 
 
 
-const Mid_Sec = () => {
+const Mid_Sec = ({allProducts}) => {
     const [isGrid, setisGrid] = useState(false);
-
-    const [products, setProducts] = useState([]);
+    // const [products, setProducts] = useState([]);
 
    
 
-  useEffect(() => {
-    const fetchPublicProducts = async () => {
-      try {
-        const res = await axios.get('http://localhost:4000/admin/products',{withCredentials:true});
+//   useEffect(() => {
+//     const fetchPublicProducts = async () => {
+//       try {
+//         const res = await axios.get('http://localhost:4000/admin/products',{withCredentials:true});
         
-        setProducts(res.data);
+//         setProducts(res.data);
         
-      } catch (err) {
-        console.error(err);
-      }
-    };
+//       } catch (err) {
+//         console.error(err);
+//       }
+//     };
 
-    fetchPublicProducts();
-  }, []);
+//     fetchPublicProducts();
+//   }, []);
 
 
 
@@ -66,7 +65,7 @@ const Mid_Sec = () => {
                 </div>
             </div>
             <div className="w-full">
-                {isGrid ? <Grid items={products} /> : <Items items={products} />}
+                {isGrid ? <Grid items={allProducts} /> : <Items items={allProducts} />}
             </div>
         </div>
     )
